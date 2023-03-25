@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Добавление товара
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1 class="display-4 fw-normal">Добавление товара</h1>
+    </div>
+    <form method="post">
+        <input type="text" name="title" id="title" class="container form-control" placeholder="Введите название товара"><br>
+        <input type="text" name="price" id="price" class="container form-control" placeholder="Введите цену"></input><br>
+        <textarea name="description" id="description" class="container form-control" placeholder="Введите описание товара"></textarea><br>
+        <div class = "d-grip gap-2 col-6 mx-auto">
+            <input type="submit" class="btn btn-success" value="Добавить">
+        </div>
+    </form>
+
+{% endblock %}
