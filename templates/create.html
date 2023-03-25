@@ -9,12 +9,34 @@
         <h1 class="display-4 fw-normal">Добавление товара</h1>
     </div>
     <form method="post">
-        <input type="text" name="title" id="title" class="container form-control" placeholder="Введите название товара"><br>
-        <input type="text" name="price" id="price" class="container form-control" placeholder="Введите цену"></input><br>
-        <textarea name="description" id="description" class="container form-control" placeholder="Введите описание товара"></textarea><br>
+        <div class="col-sm-9">
+            <label for="title" class="form-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Название товара</font></font></label>
+            <input type="text" class="form-control" id="title" placeholder="" value="" required="">
+            <div class="invalid-feedback">
+                Поле "Название товара" не заполнено.
+            </div>
+        </div>
+
+        <div class="col-sm-3">
+            <label for="price" class="form-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Цена товара</font></font></label>
+            <input type="number" class="form-control" id="price" placeholder="" value="" required="">
+            <div class="invalid-feedback">
+                Поле "Цена товара" не заполнено.
+            </div>
+        </div>
+
+        <div class="col-12">
+            <label for="description" class="form-label"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Описание товара</font></font></label>
+            <textarea class="form-control" id="description" placeholder="Введите описание товара" required=""></textarea><br>
+            <div class="invalid-feedback">
+                Поле "Описание товара" не заполнено.
+            </div>
+        </div>
         <div class = "d-grip gap-2 col-6 mx-auto">
             <input type="submit" class="btn btn-success" value="Добавить">
         </div>
-    </form>
 
+    </form>
 {% endblock %}
+
+
