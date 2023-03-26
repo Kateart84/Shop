@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
@@ -13,12 +13,16 @@ class Item(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
     price = db.Column(db.Float, nullable=False)
-    isActive = db.Column(db.Boolean, default=True)
+    # isActive = db.Column(db.Boolean, default=True)
     description = db.Column(db.Text, nullable=False)
+
+    def __repr__(self):
+        return '<Item %r>' % self.id
 
 @app.route('/')
 def index():
-    return render_template("index.html")
+    items = Item.query.order_by(Item.price).all()
+    return render_template("index.html", data=items)
 
 @app.route('/about')
 def about():
@@ -28,9 +32,23 @@ def about():
 def info():
     return render_template("info.html")
 
-@app.route('/create')
+@app.route('/create', methods=['POST', 'GET'])
 def create():
-    return render_template("create.html")
+    if request.method == "POST":
+        title = request.form['title']
+        price = request.form['price']
+        description = request.form['description']
+        # isActive = request.form['isActive']
+
+        item = Item(title=title, price=price, description=description)
+        try:
+            db.session.add(item)
+            db.session.commit()
+            return redirect('/')
+        except:
+            return "Произошла ошибка"
+    else:
+        return render_template("create.html")
 
 if __name__=='__main__':
     app.run(debug=True)
