@@ -1,6 +1,10 @@
 from flask import Flask, render_template, request, redirect
 from flask_sqlalchemy import SQLAlchemy
 
+from cloudipsp import Api, Checkout
+
+
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///shop.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -31,6 +35,19 @@ def about():
 @app.route('/info')
 def info():
     return render_template("info.html")
+
+@app.route('/buy/<int:id>')
+def item_buy(id):
+    item = Item.query.get(id)
+    api = Api(merchant_id=1396424,
+              secret_key='test')
+    checkout = Checkout(api=api)
+    data = {
+        "currency": "BYN",
+        "amount": int(item.price)
+    }
+    url = checkout.url(data).get('checkout_url')
+    return redirect(url)
 
 @app.route('/create', methods=['POST', 'GET'])
 def create():
